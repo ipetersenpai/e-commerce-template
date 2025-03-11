@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 E-Commerce Database Schema
 
-## Getting Started
+## 📊 Users Table
+| Field         | Type      | Description                                |
+|--------------|-----------|--------------------------------------------|
+| `userId`     | string    | Unique identifier for each user (Document ID) |
+| `name`       | string    | User's full name                           |
+| `email`      | string    | User's email address (unique)              |
+| `phoneNumber` | string    | (Optional) User's phone number             |
+| `address`    | string    | (Optional) User's delivery address         |
+| `orders`     | array     | List of order references                   |
+| `cart`       | array     | List of product references in the cart     |
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📦 Products Table
+| Field           | Type      | Description                                |
+|---------------|-----------|--------------------------------------------|
+| `productId`   | string    | Unique identifier for each product (Document ID) |
+| `name`        | string    | Product name                               |
+| `description` | string    | Product description                        |
+| `price`       | number    | Price of the product                       |
+| `category`    | string    | Product category (e.g., clothes, shoes)    |
+| `images`      | array     | List of image URLs                         |
+| `stock`       | number    | Available product stock                    |
+| `createdAt`   | timestamp | Date product was added                     |
+| `averageRating` | number  | Average rating (updated dynamically)       |
+| `totalReviews` | number   | Total number of reviews                    |
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ⭐ Product Reviews Table (Subcollection of Products)
+| Field       | Type      | Description                                |
+|------------|-----------|--------------------------------------------|
+| `reviewId` | string    | Unique identifier for each review (Document ID) |
+| `userId`   | string    | Reference to the user who left the review  |
+| `rating`   | number    | Rating value (1-5 scale)                   |
+| `comment`  | string    | User's review comment                      |
+| `createdAt` | timestamp | Timestamp when the review was created      |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📄 Orders Table
+| Field         | Type      | Description                                |
+|--------------|-----------|--------------------------------------------|
+| `orderId`    | string    | Unique identifier for each order (Document ID) |
+| `userId`     | string    | Reference to the user who placed the order |
+| `items`      | array     | List of ordered products and quantities    |
+| `totalAmount` | number   | Total cost of the order                    |
+| `status`     | string    | Order status (pending, to deliver, delivered) |
+| `createdAt`  | timestamp | Timestamp when the order was placed        |
+| `deliveryDate` | timestamp | (Optional) Expected delivery date          |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🗂️ Categories Table
+| Field        | Type      | Description                                |
+|-------------|-----------|--------------------------------------------|
+| `categoryId` | string    | Unique identifier for each category (Document ID) |
+| `name`       | string    | Category name (e.g., clothes, perfume)     |
+| `description` | string    | (Optional) Category description            |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🛒 Carts Table
+| Field      | Type      | Description                                |
+|-----------|-----------|--------------------------------------------|
+| `cartId`  | string    | Unique identifier for each cart (Document ID) |
+| `userId`  | string    | Reference to the user who owns the cart    |
+| `items`   | array     | List of product references and quantities  |
+| `totalPrice` | number | Total price of items in the cart           |
+| `updatedAt` | timestamp | Last updated timestamp                     |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
